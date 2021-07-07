@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.databindinginkotlinviewmodel.model.Product"></import>
+        <import type="com.databindinginkotlinviewmodel.utils.StringUtils"></import>
+       <import type="android.view.View"></import>
+     <variable
+         name="product"
+         type="Product" />
+        <variable
+            name="listener"
+            type="com.databindinginkotlinviewmodel.MainFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:onClick="@{listener::runCode}"
+        >
+
+        <ImageView
+            android:id="@+id/iv_product_sale"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/sale_image"
+            android:visibility="@{product.price>0.0?View.VISIBLE:View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/iv_product"
+            app:layout_constraintLeft_toLeftOf="@id/iv_product"
+            app:layout_constraintTop_toTopOf="@+id/iv_product" />
+
+        <ImageView
+            android:id="@+id/iv_product"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:imageName="@{product.image}"
+
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+        <RatingBar
+            android:id="@+id/rating_bar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:rating="@{product.rating}"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_price"
+            app:layout_constraintEnd_toStartOf="@id/tv_num_rating"
+            app:layout_constraintTop_toBottomOf="@+id/iv_product"
+            android:layout_marginRight="8dp" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_below="@+id/tv_price"
+            android:layout_margin="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_price"
+            app:layout_constraintVertical_bias="0">
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="@{product.description ?? product.name}"
+                android:textSize="20sp" />
+
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@{product.name}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_num_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:text="@{StringUtils.getrating(product.totalRatings)}"
+            app:layout_constraintBottom_toBottomOf="@id/rating_bar"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/rating_bar"
+            android:layout_marginRight="50dp" />
+
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="5dp"
+            android:layout_height="9dp"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@{StringUtils.getprice(product.price)}"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_product" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
